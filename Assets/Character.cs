@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Character : MonoBehaviour
+{
+    [SerializeField] private int maxHealth = 100;
+
+    private int currentHealth;
+
+    private void Awake() {
+        currentHealth = maxHealth;
+    }
+
+    public void TakeDamage(int amount) {
+        currentHealth -= amount;
+    }
+}
