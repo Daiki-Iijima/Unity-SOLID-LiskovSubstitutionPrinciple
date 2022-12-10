@@ -27,14 +27,6 @@ public class DamageDealer : MonoBehaviour
 
         int damageToDeal = 1;
 
-        //  問題あり : NPC型に依存する形になっている
-        //  一番近いのがNPCの場合
-        if(nearestCharacter is NPC) {
-            damageToDeal *= 5;
-        }
-
-        //  問題あり : ダメージが一律ではないのであれば、TakeDamageに渡す値を変える必要が出てくる
-        //  = リスコフの置換原則を守れていない(ほかのクラスに置き換えたらダメージが期待した値にならないのでダメ)
         nearestCharacter.TakeDamage(damageToDeal);
     }
 }

@@ -84,7 +84,56 @@ TakeDamageメソッドは、親クラスだけで実装するべきではない�
 
 具体的には、`TakeDamageをvirtual`メソッド化して、実装を子クラスでもできるようにします。
 
-```c#
-```
 
 ## 修正したコード
+- Characterクラス(親クラス)
+
+    ```c#
+    using UnityEngine;
+
+    public class Character : MonoBehaviour
+    {
+        [SerializeField] private int maxHealth = 100;
+
+        private int currentHealth;
+
+        private void Awake() {
+            currentHealth = maxHealth;
+        }
+
+        //  virtualに変更
+        public virtual void TakeDamage(int amount) {
+            currentHealth -= amount;
+        }
+    }
+    ```
+
+- NPCクラス(子クラス)
+
+    ```c#
+    public class NPC : Character
+    {
+        //  オーバーライドして、ダメージ倍率を変更してから計算
+        public override void TakeDamage(int amount) {
+            //  ダメージ倍率を変更
+            int damage = amount * 5;
+
+            base.TakeDamage(damage);
+        }
+    }
+    ```
+
+- DealDamageクラス内のメソッド
+
+    ```c#
+    private void DealDamageToNearestCharacter() {
+        //  近くの敵を探し出す
+        Character nearestCharacter = FindNearestCharacter();
+
+        //  ベースダメージ
+        int damageToDeal = 1;
+
+        //  ダメージを与える
+        nearestCharacter.TakeDamage(damageToDeal);
+    }
+    ```
